@@ -1,0 +1,15 @@
+[package]
+name = "serde_cow"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/GnomedDev/serde_cow"
+description = "A library with more efficent serde deserializations for Cow."
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.197"
+
+[dev-dependencies]
+serde_json = "1.0.114"
