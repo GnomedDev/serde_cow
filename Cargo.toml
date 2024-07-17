@@ -9,7 +9,7 @@ description = "A library with more efficent serde deserializations for Cow."
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde = "1.0.197"
+serde = { version = "1.0.197", features = ["alloc"] }
 
 [dev-dependencies]
-serde_json = "1.0.114"
+serde_json = { version = "1.0.114", features = ["alloc"] }

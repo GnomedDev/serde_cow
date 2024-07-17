@@ -1,4 +1,4 @@
-use std::borrow::Cow;
+use alloc::{borrow::Cow, vec::Vec};
 
 use crate::CowBytes;
 
@@ -7,7 +7,7 @@ pub(crate) struct CowBytesVisitor;
 impl<'de> serde::de::Visitor<'de> for CowBytesVisitor {
     type Value = CowBytes<'de>;
 
-    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         formatter.write_str("bytes")
     }
 

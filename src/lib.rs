@@ -18,15 +18,18 @@
 //! let efficent: CowStr = serde_json::from_str(source).unwrap();
 //! assert!(matches!(efficent.0, Cow::Borrowed(_))); // Zero copy!
 //! ```
+#![no_std]
 #![forbid(unsafe_code)]
 #![warn(clippy::pedantic)]
 
-use std::borrow::Cow;
+use alloc::borrow::Cow;
 
 use serde::Deserializer;
 
 mod bytes;
 mod str;
+
+extern crate alloc;
 
 /// A wrapper around [`Cow<str>`] to implement [`serde::Deserialize`] in the expected way.
 pub struct CowStr<'de>(pub Cow<'de, str>);

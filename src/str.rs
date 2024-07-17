@@ -1,4 +1,4 @@
-use std::borrow::Cow;
+use alloc::{borrow::Cow, string::String};
 
 use crate::CowStr;
 
@@ -7,7 +7,7 @@ pub(crate) struct CowStrVisitor;
 impl<'de> serde::de::Visitor<'de> for CowStrVisitor {
     type Value = CowStr<'de>;
 
-    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         formatter.write_str("a string")
     }
 
