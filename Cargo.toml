@@ -5,8 +5,9 @@ edition = "2021"
 license = "MIT"
 repository = "https://github.com/GnomedDev/serde_cow"
 description = "A library with more efficent serde deserializations for Cow."
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+keywords = ["cow", "serde", "optimisation", "deserialization", "string"]
+categories = ["parsing", "no-std"]
+rust-version = "1.56"
 
 [dependencies]
 serde = { version = "1.0.197", features = ["alloc"] }

@@ -18,6 +18,11 @@
 //! let efficent: CowStr = serde_json::from_str(source).unwrap();
 //! assert!(matches!(efficent.0, Cow::Borrowed(_))); // Zero copy!
 //! ```
+//!
+//! ## Minimum Supported Rust Version
+//!
+//! This is currently 1.56 and is considered a breaking change to increase.
+
 #![no_std]
 #![forbid(unsafe_code)]
 #![warn(clippy::pedantic)]
