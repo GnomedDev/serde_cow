@@ -28,6 +28,7 @@
 #![warn(clippy::pedantic)]
 
 use alloc::borrow::Cow;
+use core::fmt::Formatter;
 
 use serde::Deserializer;
 
@@ -37,7 +38,22 @@ mod str;
 extern crate alloc;
 
 /// A wrapper around [`Cow<str>`] to implement [`serde::Deserialize`] in the expected way.
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct CowStr<'de>(pub Cow<'de, str>);
+
+impl core::fmt::Debug for CowStr<'_> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
+        core::fmt::Debug::fmt(&self.0, f)
+    }
+}
+
+impl<'a> core::fmt::Display for CowStr<'a> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
+        core::fmt::Display::fmt(&self.0, f)
+    }
+}
 
 impl serde::Serialize for CowStr<'_> {
     fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
@@ -51,8 +67,23 @@ impl<'de> serde::Deserialize<'de> for CowStr<'de> {
     }
 }
 
+impl<'de, T> From<T> for CowStr<'de> where Cow<'de, str>: From<T> {
+    #[inline]
+    fn from(value: T) -> Self {
+        Self(value.into())
+    }
+}
+
 /// A wrapper around `Cow<[u8]>` to implement [`serde::Deserialize`] in the expected way.
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct CowBytes<'de>(pub Cow<'de, [u8]>);
+
+impl core::fmt::Debug for CowBytes<'_> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
+        core::fmt::Debug::fmt(&self.0, f)
+    }
+}
 
 impl serde::Serialize for CowBytes<'_> {
     fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
@@ -63,5 +94,12 @@ impl serde::Serialize for CowBytes<'_> {
 impl<'de> serde::Deserialize<'de> for CowBytes<'de> {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         deserializer.deserialize_bytes(bytes::CowBytesVisitor)
+    }
+}
+
+impl<'de, T> From<T> for CowBytes<'de> where Cow<'de, [u8]>: From<T> {
+    #[inline]
+    fn from(value: T) -> Self {
+        Self(value.into())
     }
 }
